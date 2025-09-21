@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../global/colors.js";
 
-const Header = ({ title }) => {
+const Header = ({ title, subTitle }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
+      <Text style={styles.subTitle}>{subTitle}</Text>
     </View>
   );
 };
@@ -16,10 +17,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.red,
     height: 130,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    paddingBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     color: colors.white,
+    fontFamily: "Pixel",
+  },
+  subTitle: {
+    fontSize: 20,
+    color: colors.white,
+    fontFamily: "Comic",
   },
 });

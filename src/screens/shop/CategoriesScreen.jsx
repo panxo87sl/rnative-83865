@@ -1,14 +1,15 @@
 import { StyleSheet, Text, Image, FlatList, Pressable } from "react-native";
-import FlatCard from "../components/FlatCard";
-import categories from "../data/categories.json";
+import FlatCard from "../../components/FlatCard";
+import categories from "../../data/categories.json";
+import CyberText from "../../components/CyberTextComponent";
 
 const CategoriesScreen = ({ setCategorySelectedEvent }) => {
   const renderCategoryItem = ({ item }) => {
     return (
       <Pressable onPress={() => setCategorySelectedEvent(item.title)}>
         <FlatCard>
-          <Image width={100} height={50} source={{ uri: item.image }} resizeMode="contain" />
-          <Text>{item.title}</Text>
+          <Image width={110} height={55} source={{ uri: item.image }} resizeMode="contain" />
+          <CyberText style={styles.styleFont}>{item.title}</CyberText>
         </FlatCard>
       </Pressable>
     );
@@ -25,4 +26,8 @@ const CategoriesScreen = ({ setCategorySelectedEvent }) => {
 
 export default CategoriesScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  styleFont: {
+    fontSize: 18,
+  },
+});

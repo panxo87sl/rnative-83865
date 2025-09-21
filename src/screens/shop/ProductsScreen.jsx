@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import products from "../data/products.json";
+import { StyleSheet, View, FlatList } from "react-native";
+import products from "../../data/products.json";
 import { useEffect, useState } from "react";
+import CyberText from "../../components/CyberTextComponent";
 
 const ProductsScreen = ({ filterCategory }) => {
   const [itemsFiltered, setItemsFiltered] = useState([]);
@@ -15,7 +16,7 @@ const ProductsScreen = ({ filterCategory }) => {
       <FlatList
         data={itemsFiltered}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+        renderItem={({ item }) => <CyberText style={styles.styleFont}>{item.title}</CyberText>}
       />
     </View>
   );
@@ -23,4 +24,8 @@ const ProductsScreen = ({ filterCategory }) => {
 
 export default ProductsScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  styleFont: {
+    fontSize: 20,
+  },
+});
