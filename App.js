@@ -1,30 +1,35 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, FlatList, Image } from "react-native";
-import Header from "./src/components/Header";
-import FlatCard from "./src/components/FlatCard";
-import categories from "./src/data/categories.json";
+import { StyleSheet, View } from "react-native";
 import { colors } from "./src/global/colors";
+import Header from "./src/components/Header";
+import CategoriesScreen from "./src/screens/CategoriesScreen";
+import ProductsScreen from "./src/screens/ProductsScreen";
+import { useState } from "react";
 
 export default function App() {
-  const renderCategoryItem = ({ item }) => (
-    <FlatCard>
-      <Image width={100} height={50} source={{ uri: item.image }} resizeMode="contain" />
-      <Text>{item.title}</Text>
-    </FlatCard>
-  );
+  const [categorySelected, setCategorySelected] = useState("");
 
   return (
     <View style={appStyles.container}>
-      <Header title={"Guarida de Mario"} />
-      <FlatList data={categories} renderItem={renderCategoryItem} keyExtractor={(item) => item.id} />
       <StatusBar style="auto" />
+      {categorySelected ? (
+        <>
+          <Header title={"Guarida de Mario"} />
+          <ProductsScreen filterCategory={categorySelected} />
+        </>
+      ) : (
+        <>
+          <Header title={"Guarida de Mario"} />
+          <CategoriesScreen setCategorySelectedEvent={setCategorySelected} />
+        </>
+      )}
     </View>
   );
 }
 
 const appStyles = StyleSheet.create({
   container: {
-    flex: 0.96,
+    flex: 1,
     backgroundColor: colors.darkGray,
     // alignItems: "center",
     // justifyContent: "center",

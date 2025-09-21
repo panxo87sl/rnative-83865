@@ -10,7 +10,7 @@ export default FlatCard;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: colors.mediumGray,
