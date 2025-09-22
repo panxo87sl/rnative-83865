@@ -1,10 +1,12 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Pressable } from "react-native";
 import products from "../../data/products.json";
 import { useEffect, useState } from "react";
 import CyberText from "../../components/CyberTextComponent";
 
-const ProductsScreen = ({ filterCategory }) => {
+const ProductsScreen = ({ navigation, route }) => {
   const [itemsFiltered, setItemsFiltered] = useState([]);
+
+  const { filterCategory } = route.params;
   useEffect(() => {
     const itemsFilteredByCategory = products.filter(
       (auxItem) => auxItem.category.toLowerCase() === filterCategory.toLowerCase()
@@ -16,7 +18,13 @@ const ProductsScreen = ({ filterCategory }) => {
       <FlatList
         data={itemsFiltered}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <CyberText style={styles.styleFont}>{item.title}</CyberText>}
+        renderItem={({ item }) => (
+          <View>
+            <Pressable onPress={() => navigation.navigate("Descripcion")}>
+              <CyberText style={styles.styleFont}>{item.title}</CyberText>
+            </Pressable>
+          </View>
+        )}
       />
     </View>
   );
