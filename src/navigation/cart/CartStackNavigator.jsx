@@ -10,9 +10,8 @@ const CartStackNavigator = () => {
     <Stack.Navigator
       initialRouteName="Carrito"
       screenOptions={{
-        header: ({ route }) => (
-          <Header title={"Guarida de Mario"} subTitle={route.name} />
-        ),
+        animation: "fade",
+        header: ({ route }) => <Header title={"Guarida de Mario"} subTitle={route.name} />,
       }}
     >
       <Stack.Screen name="Carrito" component={CartScreen} />

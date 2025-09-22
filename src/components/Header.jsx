@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../global/colors.js";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Feather";
 
 const Header = ({ title, subTitle }) => {
   const navigation = useNavigation();
@@ -11,9 +12,9 @@ const Header = ({ title, subTitle }) => {
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subTitle}>{subTitle}</Text>
       {canGoBack && (
-        <View>
+        <View style={styles.goBackContainer}>
           <Pressable onPress={() => navigation.goBack()}>
-            <Text>Atras</Text>
+            <Icon name="arrow-left" size={25} color={colors.white} />
           </Pressable>
         </View>
       )}
@@ -40,5 +41,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.white,
     fontFamily: "Comic",
+  },
+  goBackContainer: {
+    width: "100%",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    paddingHorizontal: 10,
   },
 });

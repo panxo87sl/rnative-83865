@@ -7,6 +7,8 @@ import { colors } from "./src/global/colors";
 import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabsNavigator from "./src/navigation/tabs/TabsNavigator";
+import { Provider } from "react-redux";
+import { Store } from "./src/store";
 
 // SplashScreen.setOptions({
 //   duration: 1000,
@@ -37,8 +39,10 @@ export default function App() {
 
   return (
     <View style={appStyles.container}>
-      //? Dinamica pasada para renderizado condicional simple ("navegacion")
-      {/* {categorySelected ? (
+      <Provider store={Store}>
+        {
+          //? Dinamica pasada para renderizado condicional simple ("navegacion")
+          /* {categorySelected ? (
         <>
         <Header title={"Guarida de Mario"} subTitle={"Productos"} />
         <ProductsScreen filterCategory={categorySelected} />
@@ -48,12 +52,14 @@ export default function App() {
           <Header title={"Guarida de Mario"} subTitle={"Categorias"} />
           <CategoriesScreen setCategorySelectedEvent={setCategorySelected} />
           </>
-          )} */}
-      //? Dinamica pasada para renderizado condicional simple ("navegacion")
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        <TabsNavigator />
-      </NavigationContainer>
+          )} */
+          // ? Dinamica pasada para renderizado condicional simple ("navegacion") */
+        }
+        <StatusBar style="auto" />
+        <NavigationContainer>
+          <TabsNavigator />
+        </NavigationContainer>
+      </Provider>
     </View>
   );
 }
