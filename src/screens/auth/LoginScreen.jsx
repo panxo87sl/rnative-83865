@@ -1,11 +1,10 @@
 import { StyleSheet, View, TextInput, Pressable, Dimensions, Switch, Image } from "react-native";
-
 import { Feather } from "@expo/vector-icons";
 import CyberText from "../../components/CyberTextComponent";
 import { colors } from "../../global/colors";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../services/authAPI";
-import { setUserEmail } from "../../store/slices/userSlice";
+import { setLocalId, setUserEmail } from "../../store/slices/userSlice";
 import { useDispatch } from "react-redux";
 
 const textInputWidth = Dimensions.get("window").width * 0.7;
@@ -23,18 +22,35 @@ const LoginScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    const saveLoginSession = async () => {
-      if (result.status === "fulfilled") {
-        try {
-          const { localId, email } = result.data;
-          dispatch(setUserEmail({ localId, email }));
-        } catch (error) {
-          console.log("Desde LoginScreen - Error al guardar sesión:", error);
-        }
-      }
-    };
-    saveLoginSession();
-  }, [result]);
+    if (result.status === "fulfilled") {
+      //!LOG Resultado del LOGIN
+      console.log(
+        "Desde LoginScreen - Resultado del Login: Email: ",
+        result.originalArgs.email,
+        " Estado: ",
+        result.status
+      );
+      dispatch(setUserEmail(result.data.email));
+      dispatch(setLocalId(result.data.localId));
+    } else {
+      //!LOG Resultado del LOGIN
+      console.log("Desde LoginScreen - Resultado del Login: Email: -", "Estado: ", result.status);
+    }
+  });
+
+  // useEffect(() => {
+  //   const saveLoginSession = async () => {
+  //     if (result.status === "fulfilled") {
+  //       try {
+  //         const { localId, email } = result.data;
+  //         dispatch(setUserEmail({ localId, email }));
+  //       } catch (error) {
+  //         console.log("Desde LoginScreen - Error al guardar sesión:", error);
+  //       }
+  //     }
+  //   };
+  //   saveLoginSession();
+  // }, [result]);
 
   return (
     <View style={styles.container}>
@@ -63,13 +79,6 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
 
-      <View style={styles.footTextContainer}>
-        <CyberText style={styles.whiteText}>¿No tienes una cuenta?</CyberText>
-        <Pressable onPress={() => navigation.navigate("Signup")}>
-          <CyberText style={[styles.whiteText, styles.underLineText]}>Crea una</CyberText>
-        </Pressable>
-      </View>
-
       <Pressable style={styles.btn} onPress={onsubmit}>
         <CyberText style={styles.btnText}>Iniciar sesión</CyberText>
       </Pressable>
@@ -82,6 +91,11 @@ const LoginScreen = ({ navigation }) => {
           trackColor={{ false: colors.gray, true: colors.cyber }}
           thumbColor={persistSession ? colors.cyber : colors.gray}
         />
+      </View>
+
+      <View style={styles.footTextContainer}>
+        <CyberText style={styles.whiteText}>Creado por Francisco Orellana</CyberText>
+        <CyberText style={styles.whiteText}>Aplicaciones Moviles - 83865 - CoderHouse</CyberText>
       </View>
 
       {result.status === "pending" && (

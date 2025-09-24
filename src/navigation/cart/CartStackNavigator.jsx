@@ -20,5 +20,3 @@ const CartStackNavigator = () => {
 };
 
 export default CartStackNavigator;
-
-const styles = StyleSheet.create({});

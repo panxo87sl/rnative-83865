@@ -7,13 +7,13 @@ export const authAPI = createApi({
   reducerPath: "authAPI",
   baseQuery: fetchBaseQuery({ baseUrl: authBaseUrl }),
   endpoints: (builder) => ({
-    signup: builder.mutation({
-      query: (auth) => ({
-        url: `accounts:signUp?key=${apiKey}`,
-        method: "POST",
-        body: auth,
-      }),
-    }),
+    // signup: builder.mutation({
+    //   query: (auth) => ({
+    //     url: `accounts:signUp?key=${apiKey}`,
+    //     method: "POST",
+    //     body: auth,
+    //   }),
+    // }),
     login: builder.mutation({
       query: (auth) => ({
         url: `accounts:signInWithPassword?key=${apiKey}`,
@@ -24,4 +24,4 @@ export const authAPI = createApi({
   }),
 });
 
-export const { useSignupMutation, useLoginMutation } = authAPI;
+export const { useLoginMutation } = authAPI;
