@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../services/authAPI";
 import { setLocalId, setUserEmail } from "../../store/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { saveSession, clearSession } from "../../db";
 
 const textInputWidth = Dimensions.get("window").width * 0.7;
 
@@ -22,21 +23,31 @@ const LoginScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (result.status === "fulfilled") {
-      //!LOG Resultado del LOGIN
-      console.log(
-        "Desde LoginScreen - Resultado del Login: Email: ",
-        result.originalArgs.email,
-        " Estado: ",
-        result.status
-      );
-      dispatch(setUserEmail(result.data.email));
-      dispatch(setLocalId(result.data.localId));
-    } else {
-      //!LOG Resultado del LOGIN
-      console.log("Desde LoginScreen - Resultado del Login: Email: -", "Estado: ", result.status);
-    }
-  });
+    (async () => {
+      if (result.status === "fulfilled") {
+        //!LOG Resultado del LOGIN
+        console.log("Desde LoginScreen - Resultado del Login: Email: ", result.originalArgs.email, " Estado: ", result.status);
+        try {
+          dispatch(setUserEmail(result.data.email));
+          dispatch(setLocalId(result.data.localId));
+          if (persistSession) {
+            await saveSession(result.data.localId, result.data.email);
+          } else {
+            await clearSession();
+          }
+        } catch (error) {
+          console.log("Desde LoginScreen - Error al guardar sesión:", error); //!LOG error de sesion
+        }
+      } else {
+        //!LOG Resultado del LOGIN
+        console.log("Desde LoginScreen - Resultado del Login: Email: -", "Estado: ", result.status);
+      }
+    })();
+  }, [result]);
+
+  useEffect(() => {
+    console.log("Desde LoginScreen - Estado de persistencia: ", persistSession); //!LOG Estado de persistencia
+  }, [persistSession]);
 
   // useEffect(() => {
   //   const saveLoginSession = async () => {
@@ -54,21 +65,11 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../../assets/mario.png")}
-        style={{ width: 200, height: 200 }}
-        resizeMode="contain"
-      />
+      <Image source={require("../../../assets/mario.png")} style={{ width: 200, height: 200 }} resizeMode="contain" />
       <CyberText style={styles.subTitle}>Inicia sesión</CyberText>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor={colors.gray}
-          value={email}
-          onChangeText={setEmail}
-          style={styles.textInput}
-        />
+        <TextInput placeholder="Email" placeholderTextColor={colors.gray} value={email} onChangeText={setEmail} style={styles.textInput} />
         <TextInput
           placeholder="Password"
           placeholderTextColor={colors.gray}
@@ -84,18 +85,13 @@ const LoginScreen = ({ navigation }) => {
       </Pressable>
 
       <View style={styles.rememberMe}>
-        <CyberText>¿Mantener sesión iniciada?</CyberText>
+        <CyberText style={{ color: colors.lightGray }}>¿Mantener sesión iniciada?</CyberText>
         <Switch
           value={persistSession}
           onValueChange={() => setPersistSession(!persistSession)}
-          trackColor={{ false: colors.gray, true: colors.cyber }}
-          thumbColor={persistSession ? colors.cyber : colors.gray}
+          trackColor={{ true: colors.mediumGray, false: colors.white }}
+          thumbColor={persistSession ? colors.red : colors.mediumGray}
         />
-      </View>
-
-      <View style={styles.footTextContainer}>
-        <CyberText style={styles.whiteText}>Creado por Francisco Orellana</CyberText>
-        <CyberText style={styles.whiteText}>Aplicaciones Moviles - 83865 - CoderHouse</CyberText>
       </View>
 
       {result.status === "pending" && (
@@ -103,6 +99,13 @@ const LoginScreen = ({ navigation }) => {
           <Feather name="loader" size={32} color={colors.cyber} />
         </View>
       )}
+
+      <View style={styles.presentationContainer}>
+        <View style={styles.presentation}>
+          <CyberText style={styles.whiteText}>Creado por Francisco Orellana</CyberText>
+          <CyberText style={styles.whiteText}>Aplicaciones Moviles - 83865 - CoderHouse</CyberText>
+        </View>
+      </View>
     </View>
   );
 };
@@ -147,6 +150,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
+  presentationContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  presentation: {
+    paddingTop: 50,
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+  },
   whiteText: {
     color: colors.lightGray,
   },
@@ -164,7 +177,6 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   rememberMe: {
-    display: "none",
     flexDirection: "row",
     alignItems: "center",
     gap: 12,

@@ -1,11 +1,10 @@
-import { StyleSheet, View, FlatList, Pressable } from "react-native";
+import { StyleSheet, View, FlatList, Pressable, ActivityIndicator } from "react-native";
 // import products from "../../data/products.json";
 // import { useEffect, useState } from "react";
 import CyberText from "../../components/CyberTextComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductSelected } from "../../store/slices/shopSlice";
 import FlatCard from "../../components/FlatCard";
-import { Feather } from "@expo/vector-icons";
 import { Image } from "react-native";
 import { useGetProductsByCategoryQuery } from "../../services/shopAPI";
 import { colors } from "../../global/colors";
@@ -16,20 +15,23 @@ const ProductsScreen = ({ navigation, route }) => {
 
   //const { filterCategory } = route.params;
   const filterCategory = useSelector((state) => state.shopReducer.categorySelected);
-  console.log("Desde ProductScreen Categoria Seleccionada: ", filterCategory); //!LOG para ver categoria seleccionada
+  console.log("Desde ProductScreen - Categoria Seleccionada: ", filterCategory); //!LOG para ver categoria seleccionada
 
   const {
     data: productFiltered,
     isLoading,
     error,
   } = useGetProductsByCategoryQuery(filterCategory.toLowerCase());
-  console.log("Datos traidos desde FIREBASE PRODUCTOS: ", productFiltered); //!LOG para ver productos
+  console.log(
+    "Desde ProductScreen - Datos traidos desde FIREBASE PRODUCTOS: ",
+    productFiltered
+  ); //!LOG para ver productos
 
   const dispatch = useDispatch();
 
   const handleSelectProduct = (product) => {
     dispatch(setProductSelected(product));
-    console.log("Desde ProductScreen Producto Seleccionado: ", product.title); //!LOG para ver producto seleccionado
+    console.log("Desde ProductScreen - Producto Seleccionado: ", product.title); //!LOG para ver producto seleccionado
     navigation.navigate("Descripcion");
   };
 
@@ -38,7 +40,12 @@ const ProductsScreen = ({ navigation, route }) => {
       <Pressable onPress={() => handleSelectProduct(item)}>
         <FlatCard>
           <CyberText style={styles.styleFont}>{item.title}</CyberText>
-          <Image width={100} height={40} source={{ uri: item.mainImage }} resizeMode="contain" />
+          <Image
+            width={100}
+            height={40}
+            source={{ uri: item.mainImage }}
+            resizeMode="contain"
+          />
         </FlatCard>
       </Pressable>
     </View>
@@ -53,7 +60,7 @@ const ProductsScreen = ({ navigation, route }) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <Feather name="loader" size={48} color={colors.mediumGray} />
+        <ActivityIndicator size="small" color={colors.red} />
       </View>
     );
   }

@@ -1,12 +1,12 @@
-import { StyleSheet, Image, FlatList, Pressable } from "react-native";
+import { StyleSheet, Image, FlatList, Pressable, ActivityIndicator } from "react-native";
 import FlatCard from "../../components/FlatCard";
-import { Feather } from "@expo/vector-icons";
 import { View } from "react-native";
 // import categories from "../../data/categories.json";
 import CyberText from "../../components/CyberTextComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategorySelected } from "../../store/slices/shopSlice";
 import { useGetCategoriesQuery } from "../../services/shopAPI";
+import { colors } from "../../global/colors";
 
 const CategoriesScreen = ({ navigation }) => {
   //const categories = useSelector((state) => state.shopReducer.categories); //? Cambio de tecnologia para obtener datos
@@ -34,7 +34,7 @@ const CategoriesScreen = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <Feather name="loader" size={48} color="#888" />
+        <ActivityIndicator size="small" color={colors.red} />
       </View>
     );
   }
