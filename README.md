@@ -3,7 +3,7 @@
 **Proyecto Final - Curso de Desarrollo de Aplicaciones Móviles - Coderhouse**  
 **Estudiante:** Francisco Orellana  
 **Código del curso:** 83865  
-**Usuario de pruebas:** "demo"
+**Usuario de pruebas:** "demo"  
 **Contraseña de pruebas:** 123456 
 
 Este proyecto es una aplicación mobile desarrollada con **React Native** usando el entorno **Expo SDK 53**, y representa el trabajo final entregado por el estudiante. Toda la lógica fue implementada desde cero utilizando Redux Toolkit, navegación con React Navigation, y Firebase como backend.
