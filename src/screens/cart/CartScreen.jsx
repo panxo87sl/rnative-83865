@@ -55,7 +55,9 @@ const CartScreen = () => {
           ListFooterComponent={<FooterComponent />}
         />
       ) : (
-        <CyberText>Aún no hay productos en el carrito</CyberText>
+        <View style={styles.centered}>
+          <CyberText>Aún no hay productos en el carrito</CyberText>
+        </View>
       )}
     </>
   );
@@ -71,6 +73,12 @@ const styles = StyleSheet.create({
     margin: 16,
     alignItems: "center",
     gap: 10,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
   },
   cartImage: {
     width: 80,

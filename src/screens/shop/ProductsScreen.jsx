@@ -1,18 +1,29 @@
 import { StyleSheet, View, FlatList, Pressable } from "react-native";
-import products from "../../data/products.json";
-import { useEffect, useState } from "react";
+// import products from "../../data/products.json";
+// import { useEffect, useState } from "react";
 import CyberText from "../../components/CyberTextComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductSelected } from "../../store/slices/shopSlice";
 import FlatCard from "../../components/FlatCard";
+import { Feather } from "@expo/vector-icons";
 import { Image } from "react-native";
+import { useGetProductsByCategoryQuery } from "../../services/shopAPI";
+import { colors } from "../../global/colors";
 
 const ProductsScreen = ({ navigation, route }) => {
-  const [itemsFiltered, setItemsFiltered] = useState([]);
+  // const [itemsFiltered, setItemsFiltered] = useState([]);
+  // const [loading, setLoading] = useState(true);
 
   //const { filterCategory } = route.params;
   const filterCategory = useSelector((state) => state.shopReducer.categorySelected);
   console.log("Desde ProductScreen Categoria Seleccionada: ", filterCategory); //!LOG para ver categoria seleccionada
+
+  const {
+    data: productFiltered,
+    isLoading,
+    error,
+  } = useGetProductsByCategoryQuery(filterCategory.toLowerCase());
+  console.log("Datos traidos desde FIREBASE PRODUCTOS: ", productFiltered); //!LOG para ver productos
 
   const dispatch = useDispatch();
 
@@ -27,22 +38,47 @@ const ProductsScreen = ({ navigation, route }) => {
       <Pressable onPress={() => handleSelectProduct(item)}>
         <FlatCard>
           <CyberText style={styles.styleFont}>{item.title}</CyberText>
-          <Image width={80} height={55} source={{ uri: item.mainImage }} resizeMode="contain" />
+          <Image width={100} height={40} source={{ uri: item.mainImage }} resizeMode="contain" />
         </FlatCard>
       </Pressable>
     </View>
   );
 
-  useEffect(() => {
-    const itemsFilteredByCategory = products.filter(
-      (auxItem) => auxItem.category.toLowerCase() === filterCategory.toLowerCase()
+  // useEffect(() => {
+  //   const itemsFilteredByCategory = products.filter(
+  //     (auxItem) => auxItem.category.toLowerCase() === filterCategory.toLowerCase()
+  //   );
+  //   setItemsFiltered(itemsFilteredByCategory);
+  // }, []);
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <Feather name="loader" size={48} color={colors.mediumGray} />
+      </View>
     );
-    setItemsFiltered(itemsFilteredByCategory);
-  }, []);
+  }
+
+  if (!productFiltered || productFiltered.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <CyberText>No hay productos en esta categoría</CyberText>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <CyberText>Error cargando productos</CyberText>
+      </View>
+    );
+  }
+
   return (
     <View>
       <FlatList
-        data={itemsFiltered}
+        // data={itemsFiltered} //? Se cambia de fuente a Firebase
+        data={productFiltered}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderProductItem}
       />
@@ -57,5 +93,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 20,
     width: 50,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
   },
 });

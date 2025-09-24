@@ -5,10 +5,11 @@ import { StyleSheet, View } from "react-native";
 import { colors } from "./src/global/colors";
 // import { CategoriesScreen, ProductsScreen } from "./src/screens";
 import { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import TabsNavigator from "./src/navigation/tabs/TabsNavigator";
+// import { NavigationContainer } from "@react-navigation/native";
+// import TabsNavigator from "./src/navigation/tabs/TabsNavigator";
 import { Provider } from "react-redux";
 import { Store } from "./src/store";
+import MainNavigator from "./src/navigation/MainNavigator";
 
 // SplashScreen.setOptions({
 //   duration: 1000,
@@ -56,9 +57,7 @@ export default function App() {
           // ? Dinamica pasada para renderizado condicional simple ("navegacion") */
         }
         <StatusBar style="auto" />
-        <NavigationContainer>
-          <TabsNavigator />
-        </NavigationContainer>
+        <MainNavigator />
       </Provider>
     </View>
   );
