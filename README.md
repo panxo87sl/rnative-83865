@@ -63,8 +63,8 @@ El proyecto está organizado en las siguientes carpetas principales dentro de `/
 1. Clonar el proyecto:
 
 ```bash
-git clone https://github.com/tuusuario/guarida-de-mario.git
-cd guarida-de-mario
+git clone https://github.com/panxo87sl/rnative-83865.git
+cd rnative-83865
 ```
 
 2. Instalar dependencias:
