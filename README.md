@@ -3,6 +3,8 @@
 **Proyecto Final - Curso de Desarrollo de Aplicaciones Móviles - Coderhouse**  
 **Estudiante:** Francisco Orellana  
 **Código del curso:** 83865  
+**Usuario de pruebas:** "demo"
+**Contraseña de pruebas:** 123456 
 
 Este proyecto es una aplicación mobile desarrollada con **React Native** usando el entorno **Expo SDK 53**, y representa el trabajo final entregado por el estudiante. Toda la lógica fue implementada desde cero utilizando Redux Toolkit, navegación con React Navigation, y Firebase como backend.
 
@@ -19,7 +21,7 @@ El proyecto está organizado en las siguientes carpetas principales dentro de `/
 - **/store**: Configuración de Redux Toolkit y slices (`userSlice`, etc.).
 - **/global**: Constantes globales como paleta de colores (`colors.js`).
 
-├── App.js
+<!-- ├── App.js
 ├── /assets                # Imágenes, logos y recursos estáticos
 ├── /components            # Componentes reutilizables (botones, íconos, textos)
 ├── /constants             # Constantes globales (categorías, colores)
@@ -33,7 +35,7 @@ El proyecto está organizado en las siguientes carpetas principales dentro de `/
 ├── /services              # Configuración de APIs: Auth y Firebase (RTK Query)
 └── /store
     ├── /slices            # Slices de Redux Toolkit
-    └── index.js           # Configuración del store
+    └── index.js           # Configuración del store -->
 
 
 ---
