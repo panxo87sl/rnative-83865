@@ -26,10 +26,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font", "expo-sqlite"],
+    "plugins": [
+      "expo-font",
+      "expo-sqlite"
+    ],
     "extra": {
       "eas": {
-        "projectId": "8413751f-7143-4152-af99-79daa7749941"
+        "projectId": "bd8bf237-f1d7-4589-9a4d-ff16ab411099"
       }
     }
   }
