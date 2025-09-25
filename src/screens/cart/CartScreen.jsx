@@ -16,12 +16,17 @@ const CartScreen = () => {
     <View style={styles.footerContainer}>
       <CyberText style={styles.footerTotal}>Total: $ {total} </CyberText>
       <View style={styles.footerButtonContainer}>
-        <Pressable style={styles.confirmButton}>
-          <CyberText style={styles.confirmButtonText}>Confirmar</CyberText>
-        </Pressable>
-        <Pressable style={styles.clearButton} onPress={() => dispatch(resetCart())}>
-          <CyberText style={styles.clearButtonText}>Vaciar Carrito</CyberText>
-        </Pressable>
+        <View style={styles.buttonContainer}>
+          <Pressable style={styles.confirmButton} disabled={true}>
+            <CyberText style={styles.confirmButtonText}>Confirmar</CyberText>
+          </Pressable>
+          <CyberText style={styles.proximamenteText}>Proximamente</CyberText>
+        </View>
+        <View>
+          <Pressable style={styles.clearButton} onPress={() => dispatch(resetCart())}>
+            <CyberText style={styles.clearButtonText}>Vaciar Carrito</CyberText>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -51,7 +56,9 @@ const CartScreen = () => {
           data={cartItems}
           keyExtractor={(item) => item.id}
           renderItem={renderCartItem}
-          ListHeaderComponent={<CyberText style={styles.cartScreenTitle}>Tu carrito:</CyberText>}
+          ListHeaderComponent={
+            <CyberText style={styles.cartScreenTitle}>Tu carrito:</CyberText>
+          }
           ListFooterComponent={<FooterComponent />}
         />
       ) : (
@@ -115,8 +122,9 @@ const styles = StyleSheet.create({
     padding: 32,
     gap: 8,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
+  buttonContainer: {},
   footerTotal: {
     fontSize: 16,
     fontWeight: "700",
@@ -124,13 +132,17 @@ const styles = StyleSheet.create({
   confirmButton: {
     padding: 8,
     paddingHorizontal: 16,
-    backgroundColor: colors.purple,
+    backgroundColor: colors.mediumGray,
+    alignItems: "center",
     borderRadius: 16,
-    marginBottom: 24,
+    marginBottom: 8,
   },
   confirmButtonText: {
     color: colors.white,
     fontSize: 16,
+  },
+  proximamenteText: {
+    paddingHorizontal: 8,
   },
   clearButton: {
     padding: 8,
@@ -145,7 +157,6 @@ const styles = StyleSheet.create({
   },
   cartScreenTitle: {
     fontSize: 16,
-    fontWeight: "700",
     textAlign: "center",
     paddingVertical: 8,
   },
