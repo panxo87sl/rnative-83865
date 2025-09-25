@@ -2,6 +2,7 @@ import { StyleSheet, View, Pressable, Image, ActivityIndicator } from "react-nat
 import { colors } from "../../global/colors";
 import { useSelector, useDispatch } from "react-redux";
 import CameraIcon from "../../components/CameraIcon";
+import LibraryIcon from "../../components/LibraryIcon";
 import CyberText from "../../components/CyberTextComponent";
 import * as ImagePicker from "expo-image-picker";
 import { usePutProfilePictureMutation } from "../../services/profileAPI";
@@ -34,6 +35,25 @@ const ProfileScreen = () => {
     }
   };
 
+  const libraryImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+      base64: true,
+    });
+
+    if (!result.canceled) {
+      const imgBase64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
+      console.log("Preview:", imgBase64.substring(0, 50));
+      dispatch(setProfilePicture(imgBase64));
+      triggerPutProfilePicture({ localId, profilePicture: imgBase64 });
+    }
+  };
+
   return (
     <View style={styles.profileContainer}>
       <View style={styles.imageProfileContainer}>
@@ -50,6 +70,9 @@ const ProfileScreen = () => {
         )}
         <Pressable onPress={pickImage} style={styles.cameraIcon}>
           <CameraIcon />
+        </Pressable>
+        <Pressable onPress={libraryImage} style={styles.libraryIcon}>
+          <LibraryIcon />
         </Pressable>
       </View>
       <CyberText style={styles.profileData}>Email: {user}</CyberText>
@@ -118,7 +141,12 @@ const styles = StyleSheet.create({
   cameraIcon: {
     position: "absolute",
     bottom: 0,
-    right: 0,
+    right: -20,
+  },
+  libraryIcon: {
+    position: "absolute",
+    bottom: 0,
+    right: 110,
   },
   profileImage: {
     width: 128,
