@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rnative-83865",
-    "slug": "rnative-83865",
+    "name": "Guarida de Mario",
+    "slug": "guarida-de-mario",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,15 +21,12 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.panxo87sl.rnative83865"
+      "package": "com.panxo87sl.guaridamario"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-font",
-      "expo-sqlite"
-    ],
+    "plugins": ["expo-font", "expo-sqlite"],
     "extra": {
       "eas": {
         "projectId": "8413751f-7143-4152-af99-79daa7749941"

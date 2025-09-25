@@ -1,5 +1,13 @@
-import { StyleSheet, View, TextInput, Pressable, Dimensions, Switch, Image } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Pressable,
+  Dimensions,
+  Switch,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import CyberText from "../../components/CyberTextComponent";
 import { colors } from "../../global/colors";
 import { useEffect, useState } from "react";
@@ -26,7 +34,12 @@ const LoginScreen = ({ navigation }) => {
     (async () => {
       if (result.status === "fulfilled") {
         //!LOG Resultado del LOGIN
-        console.log("Desde LoginScreen - Resultado del Login: Email: ", result.originalArgs.email, " Estado: ", result.status);
+        console.log(
+          "Desde LoginScreen - Resultado del Login: Email: ",
+          result.originalArgs.email,
+          " Estado: ",
+          result.status
+        );
         try {
           dispatch(setUserEmail(result.data.email));
           dispatch(setLocalId(result.data.localId));
@@ -40,7 +53,11 @@ const LoginScreen = ({ navigation }) => {
         }
       } else {
         //!LOG Resultado del LOGIN
-        console.log("Desde LoginScreen - Resultado del Login: Email: -", "Estado: ", result.status);
+        console.log(
+          "Desde LoginScreen - Resultado del Login: Email: -",
+          "Estado: ",
+          result.status
+        );
       }
     })();
   }, [result]);
@@ -65,11 +82,21 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../assets/mario.png")} style={{ width: 200, height: 200 }} resizeMode="contain" />
+      <Image
+        source={require("../../../assets/mario.png")}
+        style={{ width: 200, height: 200 }}
+        resizeMode="contain"
+      />
       <CyberText style={styles.subTitle}>Inicia sesión</CyberText>
 
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" placeholderTextColor={colors.gray} value={email} onChangeText={setEmail} style={styles.textInput} />
+        <TextInput
+          placeholder="Email"
+          placeholderTextColor={colors.gray}
+          value={email}
+          onChangeText={setEmail}
+          style={styles.textInput}
+        />
         <TextInput
           placeholder="Password"
           placeholderTextColor={colors.gray}
@@ -95,15 +122,17 @@ const LoginScreen = ({ navigation }) => {
       </View>
 
       {result.status === "pending" && (
-        <View style={styles.iconContainer}>
-          <Feather name="loader" size={32} color={colors.cyber} />
+        <View style={styles.loader}>
+          <ActivityIndicator size="small" color={colors.red} />
         </View>
       )}
 
       <View style={styles.presentationContainer}>
         <View style={styles.presentation}>
           <CyberText style={styles.whiteText}>Creado por Francisco Orellana</CyberText>
-          <CyberText style={styles.whiteText}>Aplicaciones Moviles - 83865 - CoderHouse</CyberText>
+          <CyberText style={styles.whiteText}>
+            Aplicaciones Moviles - 83865 - CoderHouse
+          </CyberText>
         </View>
       </View>
     </View>

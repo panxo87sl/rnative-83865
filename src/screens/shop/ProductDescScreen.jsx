@@ -1,4 +1,11 @@
-import { StyleSheet, View, Pressable, Image, ScrollView, useWindowDimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  Image,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import { colors } from "../../global/colors";
 import { useDispatch, useSelector } from "react-redux";
 import CyberText from "../../components/CyberTextComponent";
@@ -37,13 +44,19 @@ const ProductDescScreen = () => {
           </View>
         )}
       </View>
-      {product.stock <= 0 && <CyberText style={styles.noStockText}>Sin Stock</CyberText>}
       <CyberText style={styles.price}>Precio: ${product.price}</CyberText>
+
       <Pressable
-        style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
+        disabled={product.stock <= 0}
+        style={({ pressed }) => [
+          pressed && product.stock > 0 && { opacity: 0.8 },
+          product.stock > 0 ? styles.addToCartButton : styles.sinStockButton,
+        ]}
         onPress={() => dispatch(addItemCart({ product: product, quantity: 1 }))}
       >
-        <CyberText style={styles.textAddToCart}>Agregar al carrito</CyberText>
+        <CyberText style={styles.textAddToCart}>
+          {product.stock > 0 ? "Agregar al carrito" : "Sin stock"}
+        </CyberText>
       </Pressable>
     </ScrollView>
   );
@@ -80,10 +93,10 @@ const styles = StyleSheet.create({
   },
   tagText: {
     fontSize: 14,
-    color: colors.purple,
+    color: colors.red,
   },
   discount: {
-    backgroundColor: colors.brightOrange,
+    backgroundColor: colors.darkGray,
     width: 52,
     height: 52,
     borderRadius: 52,
@@ -95,7 +108,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     verticalAlign: "center",
   },
+  noStockTextContainer: {
+    alignItems: "center",
+  },
   noStockText: {
+    alignItems: "center",
     color: colors.red,
   },
   price: {
@@ -106,7 +123,14 @@ const styles = StyleSheet.create({
   addToCartButton: {
     padding: 8,
     paddingHorizontal: 16,
-    backgroundColor: colors.purple,
+    backgroundColor: colors.red,
+    borderRadius: 16,
+    marginVertical: 16,
+  },
+  sinStockButton: {
+    padding: 8,
+    paddingHorizontal: 16,
+    backgroundColor: colors.mediumGray,
     borderRadius: 16,
     marginVertical: 16,
   },
