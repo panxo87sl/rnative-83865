@@ -7,7 +7,7 @@
 
 Este proyecto es una aplicación mobile desarrollada con **React Native** usando el entorno **Expo SDK 53**, y representa el trabajo final entregado por el estudiante. Toda la lógica fue implementada desde cero utilizando Redux Toolkit, navegación con React Navigation, y Firebase como backend.
 
-🔐 **Nota importante:** Todos los datos sensibles como credenciales de Firebase y rutas definidas en `.env`, así como el usuario y contraseña para pruebas, han sido enviados al docente mediante el chat interno de la plataforma Coderhouse.
+🔐 **Nota importante:** Todos los datos sensibles como credenciales de Firebase y rutas definidas en `.env`, así como el usuario y contraseña para pruebas, han sido enviados al docente mediante el chat interno de la plataforma Coderhouse.  
 👉 [Tambien puedes hacer clic aquí para descargar la APK de pruebas desde Expo](https://expo.dev/artifacts/eas/ro8C97HKb9BRoRvXZ26S6P.apk)
 
 ---
@@ -127,5 +127,5 @@ eas build --platform android --profile preview
 **Nota importante:** Necesitas tener cuenta en Expo Go, inicializar el proyecto y configurar previamente utilizar este comando.
 
 ---
-🧪  Probado en Expo Go para Android
+🧪  Probado en Expo Go para Android  
 📲  Probado APK generado con EAS Build
