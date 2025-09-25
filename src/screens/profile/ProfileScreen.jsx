@@ -36,8 +36,6 @@ const ProfileScreen = () => {
   };
 
   const libraryImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
