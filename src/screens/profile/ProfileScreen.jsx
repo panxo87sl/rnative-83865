@@ -27,11 +27,18 @@ const ProfileScreen = () => {
       quality: 0.7,
       base64: true,
     });
-    console.log("Desde ProfileScreen - Resultado de imagen: ", result); //!LOG Resultado de la imagen
+
     if (!result.canceled) {
       const imgBase64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
       dispatch(setProfilePicture(imgBase64));
-      triggerPutProfilePicture({ localId: localId, profilePicture: imgBase64 });
+      triggerPutProfilePicture({ localId, profilePicture: imgBase64 })
+        .unwrap()
+        .then((res) => {
+          console.log("Subida exitosa:", res);
+        })
+        .catch((err) => {
+          console.log("Error al subir:", err);
+        });
     }
   };
 
@@ -46,7 +53,6 @@ const ProfileScreen = () => {
 
     if (!result.canceled) {
       const imgBase64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
-      console.log("Preview:", imgBase64.substring(0, 50));
       dispatch(setProfilePicture(imgBase64));
       triggerPutProfilePicture({ localId, profilePicture: imgBase64 });
     }

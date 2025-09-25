@@ -36,5 +36,5 @@ export const getSession = async () => {
 export const clearSession = async () => {
   await initDatabase();
   await db.runAsync("DELETE FROM session;");
-  console.log("Desde IndexDB - Session Eliminada"); //! LOG Session Eliminada
+  // console.log("Desde IndexDB - Session Eliminada"); //! LOG Session Eliminada
 };

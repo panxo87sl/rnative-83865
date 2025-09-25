@@ -46,7 +46,7 @@ const MainNavigator = () => {
   }, [localId, profilePicture]);
 
   // prettier-ignore
-  console.log("Desde MainNavigator - Email: ", email, "localId: ", localId, " profilePicture: ", profilePicture); //!LOG datos de usuario
+  console.log("Desde MainNavigator - Email: ", email, "localId: ", localId, " profilePicture: "); //!LOG datos de usuario
 
   if (checkingSession) {
     return (
